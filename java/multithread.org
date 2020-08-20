@@ -1,0 +1,99 @@
+#+STARTUP: overview indent
+#+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
+#+LANGUAGE: zh-CN
+
+* 生产者消费者 阻塞队列
+- 视频讲解地址： [[https://www.youtube.com/watch?v=QPYS9SoKw5g&list=PLAyxoOmo7O7cOVIe0PFufTXHqFdkNSoEi&index=44][link]]
+
+队列操作：
+          Exception	特殊值	    阻塞	超时
+Insert	add(o)	    offer(o)	put(o)	offer(o, timeout, timeunit)
+Remove	remove(o)	poll()	    take()	poll(timeout, timeunit)
+Examine	element()	peek()
+
+- Throws Exception: 如果尝试的操作不可能立即发生，则抛出一个异常。
+- 特殊值：如果尝试的操作不能立即执行，则会返回一个特殊值（通常为true / false）。
+- 阻塞:如果尝试的操作不可能立即执行，那么该方法将阻塞。
+- 超时:如果尝试的操作不可能立即执行，则该方法调用将阻塞，但不会超过给定的超时。
+- 返回一个特殊值，告诉操作是否成功（通常为true / false）。
+
+
+#+BEGIN_SRC java
+public class MyResources {
+    private volatile boolean flag = true;// 默认开启进行生产+消费
+    private AtomicInteger automicInteger = new AtomicInteger();
+    BlockingQueue<String> blockingQueue = null;
+    public MyResources(BlockingQueue<String> blockingQueue){
+        this.blockingQueue = blockingQueue;
+    }
+
+    // 生产者
+    public void product(){
+        String data = null;
+        boolean retValue = false;
+        while(flag){
+            data = automicInteger.incrementAndGet() + "";
+            retValue = blockingQueue.offer(data,2L,TimeUnit.SECONDS);
+            if(retValue){
+                log.info("生产成功 data:{}",data);
+            }else{
+                log.info("error");
+            }
+        }
+        log.info("flag == false");
+    }
+
+    // 消费
+    public void consumer(){
+        String result = null;
+        while(flag){
+            result = blockingQueue.poll(2L,TimeUnit.SECONDS);
+            if("".equals(result)){
+                flag = false;
+                log.info("超过2秒没有数据，消费退出");
+                break;
+            }
+            log.info("消费成功 result:{}",result);
+        }
+    }
+
+    public void stop(){
+        this.flag = false;
+    }
+
+    public static void main(String[] args) {
+        MyResources resources = new MyResources(new ArrayBlockingQueue());
+
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    log.info("product start");
+                    resources.product();
+                } catch (Exception ex) {
+                    ex.printstacktrace();
+                }
+            }
+        }.start();
+
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    log.info("product consumer");
+                    resources.consumer();
+                } catch (Exception ex) {
+                    ex.printstacktrace();
+                }
+            }
+        }.start();
+
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (Exception ex) {
+            ex.printstacktrace();
+        }
+        log.info("5秒后 停止");
+        resources.stop();
+    }
+}
+
+#+END_SRC
