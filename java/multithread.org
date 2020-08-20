@@ -2,9 +2,10 @@
 #+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
 #+LANGUAGE: zh-CN
 
+theInterview
 * 生产者消费者 阻塞队列
 - 视频讲解地址： [[https://www.youtube.com/watch?v=QPYS9SoKw5g&list=PLAyxoOmo7O7cOVIe0PFufTXHqFdkNSoEi&index=44][link]]
-
+c
 队列操作：
           Exception	特殊值	    阻塞	超时
 Insert	add(o)	    offer(o)	put(o)	offer(o, timeout, timeunit)
