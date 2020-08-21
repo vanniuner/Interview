@@ -1,0 +1,33 @@
+#+STARTUP: overview indent
+#+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
+#+LANGUAGE: zh-CN
+
+* callable
+为何会需要callable ?
+分治合并,获取线程内返回的结果
+
+#+BEGIN_SRC java
+
+public class MyThread implements Callable<Integer> {
+
+    @Override
+    public Integer call() throws Exception {
+        log.info("call");
+        return 1024;
+    }
+}
+
+public static void main(String[] args) {
+
+    FurtureTask<Integer> furtureTask = new FurtureTask<>(new MyThread());
+    new Thread(furtureTask,"aa").start();
+    // 无效的调用，同一个task只执行一次，勿重重调用
+    new Thread(furtureTask,"bb").start();
+
+    // 自旋 防止阻塞
+    while(!furtureTask.isDone()){
+        // furtureTask.get() 阻塞
+        log.info("result:{}",furtureTask.get());
+    }
+}
+#+END_SRC
