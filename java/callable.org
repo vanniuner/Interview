@@ -3,8 +3,9 @@
 #+LANGUAGE: zh-CN
 
 * callable
-为何会需要callable ?
-分治合并,获取线程内返回的结果
+- 构造注入，传接口更灵活
+- 为何会需要callable ?
+  - 分治合并,获取线程内返回的结果
 
 #+BEGIN_SRC java
 
