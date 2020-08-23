@@ -1,0 +1,45 @@
+#+STARTUP: overview indent
+#+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
+#+LANGUAGE: zh-CN
+
+- 自定义手写线程池
+- 如何合理配置?
+  - 获取cpu核心数量
+  #+BEGIN_SRC
+    RunTime.getRunTime().availableProcessors();
+  #+END_SRC
+  - cpu密集型
+    cpu密集型任务，尽可能少配置线程数量，尽量减少cpu上下文的切换
+    一般公式：cpu核心数 + 1 个线程的线程池
+  - io密集型
+    1. io密集型任务并不是一直在执行任务，应尽可能配置多的线程，如：cpu核心数 * 2
+    2. io密集型任务，有大量的阻塞，读磁盘，读数据库等
+       参考公式：cpu核心数 / (1 - 阻塞系数) 阻塞系数一般在0.8-0.9之间
+       比如：8 / ( 1-0.9 ) = 80
+
+#+BEGIN_SRC java
+
+public class customThreadPool {
+    public static void main(String[] args) {
+
+        // 最大处理线程数 = max线程数+阻塞队列长度
+        ExecutorService threadpool = new TheadPoolExecutor(2,5,1L,TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>(3),Executos.defaultThreadFactory(),new ThreadPoolExecutors.AbortPolicy());
+        // 满载后，将任务返回给调用者 main ThreadPoolExecutors.CallerRunsPolicy()
+
+        // 抛弃队列中等待最久的任务，尝试再次提交当前任务 main ThreadPoolExecutors.discardOldestPolicy();
+
+        try {
+            for (int i = 1; i <= 9 ; i++) {
+                threadpool.execute(()->{
+                    log.info(Thread.currentThread().getName() + "办理业务");
+                });
+            }
+        } catch (Exception ex) {
+            ex.printStackTrack();
+        } finally {
+            threadpool.shutdown();
+        }
+  }
+}
+
+#+END_SRC

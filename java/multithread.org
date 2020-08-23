@@ -2,6 +2,9 @@
 #+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
 #+LANGUAGE: zh-CN
 
+* 多线程到优点
+- 提高cpu的利用率
+- 提高系统吞吐量，性能优势
 * 生产者消费者 阻塞队列
 - 视频讲解地址： [[https://www.youtube.com/watch?v=QPYS9SoKw5g&list=PLAyxoOmo7O7cOVIe0PFufTXHqFdkNSoEi&index=44][link]]
 队列操作：

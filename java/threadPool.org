@@ -1,0 +1,53 @@
+#+STARTUP: overview indent
+#+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
+#+LANGUAGE: zh-CN
+
+- 线程池 实现 接口 Executor Executors
+  Executors 是Executor 辅助工具类
+  Arrays 是Array 到辅助工具类
+  Collections 是 Collection 的辅助工具类
+  - 线程池 参数
+    底层都使用ThreadPoolExecutor 和 阻塞队列 实现，
+    线程池的 五大参数，七参数意义
+    1. corePoolSize，常驻核心线程数量
+    2. maximumPoolSize，最大线程数，必须大于1，阻塞队列满后线程扩容至此数量
+    3. keepAliveTime 多余空闲线程到存活时间
+    4. unit 多余空闲线程到存活时间单位
+    5. blockingqueue 阻塞队列，被提交但未被执行的任务
+    6. threadFactory 线程工厂，一般使用默认即可
+    7. rejectHandler 4种拒绝策略，队列及核心数都打满后，设置拒绝
+  - threadPoolExecutor 线程池底层原理
+  - Jdk 默认的拒绝策略
+    当阻塞队列满了，同时线程池到max线程数量也已达上限，无法为新任务提供服务。此时需要拒绝策略机制合理处理这个问题，线程池无法正常运行
+    RejectedExecutionHandler 接口jdk的实现
+    - AbortPolicy 默认 直接抛出RejectExecutionException
+    - CallerRunsPolicy:
+    - DiscardOldestPolicy 抛弃队列中等待最久的任务，然后把当前任务加入队列中重试
+    - DiscardPolicy 直接丢弃任务，不处理页不抛出错误
+  - 工作中一个都不用，项目上只能用自定义的，为什么不用jdk提供的？
+    使用Executor创建线程，jdk底层使用了LinkedBlockingQueue相当于一个无界阻塞队列（长度是Integer.Max_value 约21亿），默认使用Executor的实现，将设置一个超大队列，很可能将系统内存装满导致oom异常
+
+#+BEGIN_SRC java
+public static void main(String[] args) {
+    // 一池固定数量线程,五个柜台窗口营业员
+    ExecutorService threadPool = Executors.newFixedThreadPool(5);
+    // 一池一线程, 仅一个柜台营业员办理业务
+    // ExecutorService threadPool = Executors.newSingleThreadExecutor();
+    // 一池多线程，根据业务量浮动增加营业窗口
+    // ExecutorService threadPool = Executors.newCachedThreadPool();
+
+    try {
+        //模拟10个用户办理业务，每个用户都是一个外部请求线程
+        for (int i = 0; i < 10; i++) {
+            threadPool.execute( ()-> {
+                log.info("{}:办理业务",Thread.currentThread().getName())
+            });
+        // 模拟业务忙闲
+        try {Thread.sleep(1000);} catch (InterruptedException ignore) { }
+    } catch (Exception ex) {
+        ex.printStackTrace();
+    }finally{
+       threadPool.shutdown();
+    }
+}
+#+END_SRC
