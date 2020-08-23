@@ -1,0 +1,53 @@
+#+STARTUP: overview indent
+#+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
+#+LANGUAGE: zh-CN
+
+- 死锁编码及定位
+  - 产生死锁的原因
+    两个或两个以上到进程在执行过程中互相持有对方到锁，造成相互等待的现象，如无外力干涉将无法推进下去，资源不足导致因争夺有限的资源而陷入了死锁
+    - 资源不足
+    - 进程推进顺序不当
+    - 资源分配不当
+  - 编写死锁
+    #+BEGIN_SRC java
+    public class HoldLockThread implements Runnable {
+        private String lockA;
+        private String lockB;
+
+        public HoldLockThread(String lockA,String lockB){
+            this.lockA = lockA;
+            this.lockB = lockB;
+        }
+
+        @Override
+        public void run(){
+            synchronized (lockA){
+                log.info("{},hold {},want {}",
+                    Thread.currentThread().getName() , lockA,lockB );
+
+                try {
+                    Thread.sleep(2);
+                } catch (InterruptedException ignore) { }
+
+                synchronized (lockB){
+                    log.info("{},hold {},want {}",
+                        Thread.currentThread().getName() , lockB,lockA );
+                }
+
+            }
+        }
+    }
+
+    public class deadLock {
+        public static void main(String[] args) {
+            String lockA = "lockA";
+            String lockB = "lockB";
+            Thread t1 = new Thread(new HoldLockThread(lockA,lockB) , "AAAA").start();
+            Thread t2 = new Thread(new HoldLockThread(lockB,lockA) , "BBBB").start();
+        }
+    }
+    #+END_SRC
+  - 证明死锁
+    - jsp 命令 查看线程编号
+    - jstack 查看堆栈信息
+      ：Found 1 deadLock
