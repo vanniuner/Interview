@@ -1,0 +1,48 @@
+#+STARTUP: overview indent
+#+HTML_HEAD: <link href="style.css" rel="stylesheet" type="text/css" />
+#+LANGUAGE: zh-CN
+
+- JVM 垃圾回收时如何确定垃圾?什么是GCROOTS?
+  - 内存中已经不再使用的文件
+  - 引用计数法，难解决互相引用问题
+  - 枚举根节点做可达性分析，tracing 跟踪
+    - 通过一系列名为 GC Roots 对象作为起点，通过引用关系遍历判断可达性
+- 哪些对象可以做为GC Roots?
+  - 虚拟机栈 局部变量表中引用的对象
+    #+BEGIN_SRC java
+       Object object = new Object()；
+    #+END_SRC
+  - 方法区中到类 静态属性引用的对象
+    #+BEGIN_SRC java
+      static Object object = new Object()；
+    #+END_SRC
+  - 方法区中常量引用的对象
+    #+BEGIN_SRC java
+      static final Object object = new Object()；
+    #+END_SRC
+  - 本地方法栈中（native方法）引用的对象
+- 如何盘点JVM启动的参数值？
+  - 标配
+    -version
+    -help
+  - X参数
+    -Xint 解释执行
+    -Xcomp 编译为本地代码
+    -Xmixed 混合执行（先编译后执行）
+  - XX启动参数值查看 jps + jinfo
+    #+BEGIN_SRC shell
+    jps
+    java -XX:+PrintGCDetails #是否开启打印GC信息
+    jinfo -flag PrintGCDetails 9022
+    jinfo -flags 9022
+    #+END_SRC
+    - Boolean 类型
+      -XX:+ 或者 - 某个属性
+      +表示开启，-表示关闭
+        #+BEGIN_SRC shell
+        -XX:+PrintGCDetails #是否开启打印GC信息
+        #+END_SRC
+    - KeyValue 类型 设置方式
+      -XX:属性key=属性value
+      -XX:Metaspace=1024m 原空间大小，可打印获取jvm启动默认值
+      -XX:MaxTenuringThreshold=14 young区交换满15次才到old区
