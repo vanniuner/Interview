@@ -46,3 +46,6 @@
       -XX:属性key=属性value
       -XX:Metaspace=1024m 原空间大小，可打印获取jvm启动默认值
       -XX:MaxTenuringThreshold=14 young区交换满15次才到old区
+  - 经典参数 -Xms 和 -Xmx
+    等价于-XX:InitialHeapSize
+    等价于-XX:MaxHeapSize
