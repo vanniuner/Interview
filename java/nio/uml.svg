@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="302px" preserveAspectRatio="none" style="width:312px;height:302px;" version="1.1" viewBox="0 0 312 302" width="312px" zoomAndPan="magnify"><defs><filter height="300%" id="f6bmoq1bznyy9" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><!--MD5=[db52df6defc4b5f5357798beb0becd92]
+entity selector--><polygon fill="#FEFECE" filter="url(#f6bmoq1bznyy9)" points="105,16,115,6,201,6,201,42.2969,191,52.2969,105,52.2969,105,16" style="stroke: #000000; stroke-width: 1.5;"/><line style="stroke: #000000; stroke-width: 1.5;" x1="191" x2="201" y1="16" y2="6"/><line style="stroke: #000000; stroke-width: 1.5;" x1="105" x2="191" y1="16" y2="16"/><line style="stroke: #000000; stroke-width: 1.5;" x1="191" x2="191" y1="16" y2="52.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="56" x="120" y="38.9951">selector</text><!--MD5=[150fb4f7d642c5615ffcbb328a655ff7]
+entity channel1--><ellipse cx="38" cy="141" fill="#FEFECE" filter="url(#f6bmoq1bznyy9)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="64" x="6" y="170.9951">channel1</text><!--MD5=[3f0b561021787e094d115da049602aa6]
+entity channel2--><ellipse cx="153" cy="141" fill="#FEFECE" filter="url(#f6bmoq1bznyy9)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="64" x="121" y="170.9951">channel2</text><!--MD5=[383a1bac7cf8a1f9013b1bfcf4d97a08]
+entity channel3--><ellipse cx="268" cy="141" fill="#FEFECE" filter="url(#f6bmoq1bznyy9)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="64" x="236" y="170.9951">channel3</text><!--MD5=[b025d94079d90157d4ff40d5b1c1f62c]
+entity buffer1--><ellipse cx="38" cy="259" fill="#FEFECE" filter="url(#f6bmoq1bznyy9)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="49" x="13.5" y="288.9951">buffer1</text><!--MD5=[d297bbfaf4fbd02c0aff6127c04bce39]
+entity buffer2--><ellipse cx="153" cy="259" fill="#FEFECE" filter="url(#f6bmoq1bznyy9)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="49" x="128.5" y="288.9951">buffer2</text><!--MD5=[982f0465017ff0392b918fe8fc6ac552]
+entity buffer3--><ellipse cx="268" cy="259" fill="#FEFECE" filter="url(#f6bmoq1bznyy9)" rx="8" ry="8" style="stroke: #A80036; stroke-width: 2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="49" x="243.5" y="288.9951">buffer3</text><!--MD5=[58b4393ec06ff34467e1a9a2f8721e95]
+link selector to channel1--><path d="M129.1719,52.2065 C105.5628,75.1997 70.26,109.5816 51.2538,128.092 " fill="none" id="selector-to-channel1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="47.2332,132.0077,56.4715,128.5939,50.8151,128.5192,50.8899,122.8628,47.2332,132.0077" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[ca2b9718e939ad18ea113ea5dc917aa2]
+link selector to channel2--><path d="M153,52.2065 C153,74.504 153,107.5112 153,126.3687 " fill="none" id="selector-to-channel2" style="stroke: #FF0000; stroke-width: 2.0;"/><polygon fill="#FF0000" points="153,131.7393,157,122.7393,153,126.7393,149,122.7393,153,131.7393" style="stroke: #FF0000; stroke-width: 2.0;"/><!--MD5=[b5a122e6ac5b1ee6a271327edcb8d142]
+link selector to channel3--><path d="M176.8281,52.2065 C200.4372,75.1997 235.74,109.5816 254.7462,128.092 " fill="none" id="selector-to-channel3" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="258.7668,132.0077,255.1101,122.8628,255.1849,128.5192,249.5285,128.5939,258.7668,132.0077" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[a16396b6814ccff121e49ad25ede7913]
+link channel1 to buffer1--><path d="M38,150.2593 C38,170.7666 38,220.1362 38,244.6673 " fill="none" id="channel1-to-buffer1" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="38,249.7838,42,240.7838,38,244.7838,34,240.7838,38,249.7838" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[24c31118d663a3f6f064a0c33fd7736e]
+link channel2 to buffer2--><path d="M153,150.2593 C153,170.7666 153,220.1362 153,244.6673 " fill="none" id="channel2-to-buffer2" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="153,249.7838,157,240.7838,153,244.7838,149,240.7838,153,249.7838" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[0509a24eb37c6aadb7a5c3cc13c32e10]
+link channel3 to buffer3--><path d="M268,150.2593 C268,170.7666 268,220.1362 268,244.6673 " fill="none" id="channel3-to-buffer3" style="stroke: #A80036; stroke-width: 1.0;"/><polygon fill="#A80036" points="268,249.7838,272,240.7838,268,244.7838,264,240.7838,268,249.7838" style="stroke: #A80036; stroke-width: 1.0;"/><!--MD5=[bcc634ddebbe9c688df1b9ae45167ddc]
+@startuml
+        node selector
+        selector - -> channel1                             
+        selector -[#red;bold]-> channel2
+        selector - -> channel3
+        channel1 - -> buffer1
+        channel2 - -> buffer2
+        channel3 - -> buffer3
+@enduml
+
+PlantUML version 1.2020.16(Mon Aug 24 04:20:43 CST 2020)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
