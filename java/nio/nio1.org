@@ -1,0 +1,92 @@
+#+STARTUP: overview indent
+#+HTML_HEAD: <link href="../style.css" rel="stylesheet" type="text/css" />
+#+LANGUAGE: zh-CN
+
+- nio 面向缓冲区进行编程
+  - 使用 allocate 创建buffer
+- nio 提供存取数据的两种方法
+  - put() 放入数据
+  - get() 取出数据
+- 缓冲区中的四个核心属性
+  - capacity 总容量，表示缓冲区中最大存储的容量，一旦申明不能改变
+  - limit 可操作界限，表示缓冲区可操作的数据的大小，limit后的数据不能进行读写
+  - position 当前位置，缓冲区中正在操作的数据位置
+- 通道 channel
+  - 包路径： java.nio.channels
+  - 只能与buffer进行交互
+#+BEGIN_SRC java
+public class nio1 {
+
+    void test1(){
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        log.info("position:{}",buffer.position); // 没有操作，则位置应该在0
+        log.info("limit:{}",buffer.limit);       // 还未写入，可操作的界限是1024
+        log.info("capacity:{}",buffer.capacity); // 容量也是满的, 1024
+        // 使用put方法，存入数据到缓冲区中
+        buffer.put("abc".getBytes());
+
+        log.info("position:{}",buffer.position); // 3
+        log.info("limit:{}",buffer.limit);       // 可操作的界限是1024
+        log.info("capacity:{}",buffer.capacity); // 1024
+
+        // 切换模式，切换成读取模式
+        buffer.flip();
+        log.info("position:{}",buffer.position); // 0
+        log.info("limit:{}",buffer.limit);       // 5  解释：面向读，只有5个可操作字符，未写入的数据是不可读的
+        log.info("capacity:{}",buffer.capacity); // 1024
+
+        // 利用get方法，读取缓冲区中的数据
+        byte[] data = new byte[buffer.limit];
+        buffer.get(data);
+        log.info("data:{}",new String(dst,0,dst.length)); // data: abc
+
+        log.info("position:{}",buffer.position); // 5 读取之后，游标产生移动，前面的数据已经进行过操作
+        log.info("limit:{}",buffer.limit);       // 5
+        log.info("capacity:{}",buffer.capacity); // 1024
+
+        // rewind() 可重复读，已读取过的数据，可以多次读取
+        buffer.rewind()
+        log.info("position:{}",buffer.position); // 0
+        log.info("limit:{}",buffer.limit);       // 5
+        log.info("capacity:{}",buffer.capacity); // 1024
+
+        // clear() 清空缓冲区，数据仍然存在，只不过游标会清零
+        buffer.clear()
+        log.info("position:{}",buffer.position); // 0
+        log.info("limit:{}",buffer.limit);       // 1024
+        log.info("capacity:{}",buffer.capacity); // 1024
+        log.info("data:{}",(char) buffer.get(1)); // b ,表示数据还存在
+
+        // mark 标记，记录当前postion的位置
+    }
+
+    void test2(){
+        String str = "abcde";
+        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        buffer.put(str.getBytes());
+
+        buffer.clip();
+        byte[] data = new byte[buffer.limit];
+        buffer.get(data);
+        log.info("data:{}",new String(dst, 0, 2)); // data: abc
+        log.info("position:{}",buffer.position); // 2
+
+        buffer.mark(); // 记录当前位置: 2
+        buffer.get(data,2,2);
+
+        buffer.reset(); //恢复到mark的位置
+        buffer.postion();       // 2
+
+        boolean remain = buffer.hasRemaining();  // 查看缓冲区中是否还有剩余的数据
+    }
+
+
+    // 与非直接缓冲区 allocate分配，将缓冲区建立再jvm 中
+    // 直接缓冲区 将缓冲区建立在物理内存中，由操作系统直接管理，效率更好
+    void test2(){
+        String str = "abcde";
+        ByteBuffer buffer = ByteBuffer.allocateDirect(1024);
+        buffer.put(str.getBytes());
+    }
+}
+#+END_SRC

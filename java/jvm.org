@@ -47,5 +47,19 @@
       -XX:Metaspace=1024m 原空间大小，可打印获取jvm启动默认值
       -XX:MaxTenuringThreshold=14 young区交换满15次才到old区
   - 经典参数 -Xms 和 -Xmx
+   
     等价于-XX:InitialHeapSize
     等价于-XX:MaxHeapSize
+  - java -XX:+PrintFlagsInitial
+    - 打印jvm 所有默认参数，bool ，keyvalue
+  - java -XX:+PrintFlagsFinal
+   
+    = 是初始值
+    := 表示修改过默认启动参数
+
+  - java -XX:+PrintCommandLineFlags -version
+- 常用的jvm参数
+  - -Xms 默认为物理内存的1/64
+  - -Xmx 默认为物理内存的1/4
+  - -Xss 设置单个线程栈大小，一般默认512-1024k 等价于 -XX:ThreadStackSize
+  - -XX:Metaspace 元空间取代永久代，元空间不在虚拟机中，而是在本地内存中
